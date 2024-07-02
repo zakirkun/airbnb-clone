@@ -1,20 +1,34 @@
-import { View, Text } from 'react-native'
-import React from 'react'
-import { Link } from 'expo-router'
+import { View }from 'react-native'
+import React, { useMemo, useState } from 'react'
+import {  Stack } from 'expo-router'
+import ExploreHeader from '@/components/ExploreHeader'
+import listingData from '@/assets/data/airbnb-listings.json'
+import listingDataGeo from '@/assets/data/airbnb-listings.geo.json'
+import ListingsMap from '@/components/ListingsMap'
+import ListingBottomSheet from '@/components/ListingBottomSheet'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 
 const Page = () => {
+  const [category, setCategory] = useState('Tiny homes');
+  const items = useMemo(() => listingData as any, []);
+  const geoItems = useMemo(() => listingDataGeo, []);
+  const onDataChanged = (category: string) => {
+    setCategory(category);
+  }
+
   return (
-    <View>
-      <Link href={"/(modals)/login"}>
-        Login
-      </Link>
-      <Link href={"/(modals)/booking"}>
-        Booking
-      </Link>
-      <Link href={"/listing/1234"}>
-        Listing detail
-      </Link>
-    </View>
+    <GestureHandlerRootView>
+      <View style={{ flex: 1, marginTop: 80 }}>
+        <Stack.Screen options={{
+            header: () => <ExploreHeader onCategoryChanged={onDataChanged} />
+          }} 
+        />
+
+        {/* <Listings listings={items} category={category} /> */}
+        <ListingsMap listings={geoItems} />
+        <ListingBottomSheet listings={items} category={category} />
+      </View>
+    </GestureHandlerRootView>
   )
 }
 

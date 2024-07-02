@@ -93,7 +93,7 @@ function RootLayoutNav() {
             <Ionicons name="close-outline" size={26}/>
           </TouchableOpacity>
         }}/>
-        <Stack.Screen name="listing/[id]" options={{headerTitle: ''}}/>
+        <Stack.Screen name="listing/[id]" options={{headerTitle: '', headerTransparent: true}}/>
         <Stack.Screen name="(modals)/booking" options={{
           presentation: 'transparentModal',
           animation: 'fade_from_bottom',
